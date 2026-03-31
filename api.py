@@ -1,7 +1,7 @@
 import requests
 import html
 def get_question():
-    url = 'https://opentdb.com/api.php?amount=1'
+    url = 'https://opentdb.com/api.php?amount=10&category=18&type=boolean'
     response = requests.get(url)
     data = response.json()
     question = data['results'][0]['question']
