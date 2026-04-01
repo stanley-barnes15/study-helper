@@ -4,4 +4,4 @@ answer = input('Your answer:\n')
 if answer.lower() == correct_answer.lower():
     print('Correct!')
 else:
-    print(f'Wrong! The correct answer is {correct_answer}.')
+    print(f'Wrong! The correct answer is {correct_answer.lower()}.')
