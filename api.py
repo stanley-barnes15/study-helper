@@ -81,7 +81,7 @@ def get_user_choices():
             category = input('Invalid category id.\nPlease enter a valid category id:\n')
     except:
         print('Invalid input. Please enter a number.')
-        return get_user_category()
+        return get_user_choices()
     difficulty = input('Please enter the difficulty level you want to play (easy/medium/hard/any):\n')
     while difficulty not in ['easy', 'medium', 'hard', 'any']:
         difficulty = input('Invalid difficulty level. Please enter again.\n')
