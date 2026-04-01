@@ -1,13 +1,14 @@
 from api import get_question, get_user_category
 questions, correct_answers, incorrect_answers = get_question(get_user_category())
 total = 0
-for question, correct_answer, incorrect_answer in zip(questions, correct_answers, incorrect_answers):
+for question, correct_answer, answers in zip(questions, correct_answers, incorrect_answers):
     print(f'{question}?')
-    incorrect_answer.append(correct_answer)
-    for i, option in enumerate(sorted(incorrect_answer)):
+    answers.append(correct_answer)
+    answers = sorted(answers)
+    for i, option in enumerate(answers):
        print(f'{i+1}. {option}')
     answer = input('Your answer: ')
-    if answer.lower() == correct_answer.lower():
+    if answer.lower() == correct_answer.lower() or answer == str(answers.index(correct_answer)+1):
         print('Correct!')
         total += 1
     else:
