@@ -1,15 +1,23 @@
 import requests
 import html
 def get_question(category):
-    url = f'https://opentdb.com/api.php?amount=10&category={category}&type=boolean'
+    questions = []
+    correct_answers = []
+    url = f'https://opentdb.com/api.php?amount=10&category={category}'
     response = requests.get(url)
     data = response.json()
-    question = data['results'][0]['question']
-    question = html.unescape(question)
-    print(f'True or False, {question}?')
-    correct_answer = data['results'][0]['correct_answer']
-    correct_answer = html.unescape(correct_answer)
-    return question, correct_answer
+    while data['response_code'] != 0:
+        print('Error with retrieving questions. Please choose category again.')
+        category = get_user_category()
+        url = f'https://opentdb.com/api.php?amount=10&category={category}'
+        response = requests.get(url)
+        data = response.json()
+    for i in range(10):
+        question = html.unescape(data['results'][i]['question'])
+        correct_answer = html.unescape(data['results'][i]['correct_answer'])
+        questions.append(question)
+        correct_answers.append(correct_answer)
+    return questions, correct_answers
 
 def get_user_category():
     url = 'https://opentdb.com/api_category.php'
