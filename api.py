@@ -70,7 +70,6 @@ def get_user_category():
     url = 'https://opentdb.com/api_category.php'
     response = requests.get(url)
     data = response.json()
-    print(data)
     for name in data['trivia_categories']:
         print(f"{name['id']} - {name['name']}")
     try:

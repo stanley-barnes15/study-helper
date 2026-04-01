@@ -1,8 +1,8 @@
 from api import get_question, get_user_category
-category = get_user_category()
 type = input('Please enter the type of questions you want to play (multiple/boolean/any):\n')
 while type not in ['multiple', 'boolean', 'any']:
     type = input('Invalid question type. Please enter again.\n')
+category = get_user_category()
 difficulty = input('Please enter the difficulty level you want to play (easy/medium/hard/any):\n')
 while difficulty not in ['easy', 'medium', 'hard', 'any']:
     difficulty = input('Invalid difficulty level. Please enter again.\n')
