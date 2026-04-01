@@ -1,25 +1,34 @@
 import requests
 import html
-def get_question(category, type):
+def get_question(category, type, difficulty):
     questions = []
     correct_answers = []
     incorrect_answers = []
     if type == 'any':
         if category == '0':
-            url = 'https://opentdb.com/api.php?amount=10'
+            url = 'https://opentdb.com/api.php?amount=10&difficulty={difficulty}'
         else:
-            url = f'https://opentdb.com/api.php?amount=10&category={category}'
+            url = f'https://opentdb.com/api.php?amount=10&category={category}&difficulty={difficulty}'
     else:
         if category == '0':
-            url = f'https://opentdb.com/api.php?amount=10&type={type}'
+            url = f'https://opentdb.com/api.php?amount=10&type={type}&difficulty={difficulty}'
         else:
-            url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
+            url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}&difficulty={difficulty}'
     response = requests.get(url)
     data = response.json()
     while data['response_code'] != 0:
-        print('Error with retrieving questions. Please choose category again.')
+        print('Error retrieving questions. Please choose category again.')
         category = get_user_category()
-        url = f'https://opentdb.com/api.php?amount=10&category={category}'
+        if type == 'any':
+            if category == '0':
+                url = 'https://opentdb.com/api.php?amount=10&difficulty={difficulty}'
+            else:
+                url = f'https://opentdb.com/api.php?amount=10&category={category}&difficulty={difficulty}'
+        else:
+            if category == '0':
+                url = f'https://opentdb.com/api.php?amount=10&type={type}&difficulty={difficulty}'
+            else:
+                url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}&difficulty={difficulty}'
         response = requests.get(url)
         data = response.json()
     for i in range(10):

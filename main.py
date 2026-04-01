@@ -1,8 +1,8 @@
 from api import get_question, get_user_category
-questions, correct_answers, incorrect_answers = get_question(get_user_category(), input('Please enter the type of questions you want to play (multiple/boolean/any):\n'))
+questions, correct_answers, incorrect_answers = get_question(get_user_category(), input('Please enter the type of questions you want to play (multiple/boolean/any):\n'), difficulty)
 total = 0
 for question, correct_answer, answers in zip(questions, correct_answers, incorrect_answers):
-    print(f'{question}?')
+    print(question)
     answers.append(correct_answer)
     answers = sorted(answers)
     if len(answers) == 2:
