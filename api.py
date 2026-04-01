@@ -29,8 +29,8 @@ def get_question(category, type, difficulty):
     response = requests.get(url)
     data = response.json()
     while data['response_code'] != 0:
-        print('Error retrieving questions. Please choose category again.')
-        category = get_user_category()
+        print('Error retrieving questions. Please choose again.')
+        category = get_user_choices()
         if type == 'any':
             if category == '0':
                 if difficulty == 'any':
@@ -66,7 +66,10 @@ def get_question(category, type, difficulty):
         incorrect_answers.append(incorrect)
     return questions, correct_answers, incorrect_answers
 
-def get_user_category():
+def get_user_choices():
+    type = input('Please enter the type of questions you want to play (multiple/boolean/any):\n')
+    while type not in ['multiple', 'boolean', 'any']:
+        type = input('Invalid question type. Please enter again.\n')
     url = 'https://opentdb.com/api_category.php'
     response = requests.get(url)
     data = response.json()
@@ -79,4 +82,7 @@ def get_user_category():
     except:
         print('Invalid input. Please enter a number.')
         return get_user_category()
-    return category
+    difficulty = input('Please enter the difficulty level you want to play (easy/medium/hard/any):\n')
+    while difficulty not in ['easy', 'medium', 'hard', 'any']:
+        difficulty = input('Invalid difficulty level. Please enter again.\n')
+    return category, type, difficulty
