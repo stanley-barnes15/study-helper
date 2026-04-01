@@ -1,7 +1,7 @@
 import requests
 import html
-def get_question():
-    url = 'https://opentdb.com/api.php?amount=10&category=18&type=boolean'
+def get_question(category):
+    url = f'https://opentdb.com/api.php?amount=10&category={category}&type=boolean'
     response = requests.get(url)
     data = response.json()
     question = data['results'][0]['question']
@@ -16,5 +16,13 @@ def get_user_category():
     response = requests.get(url)
     data = response.json()
     print(data)
-
-get_user_category()
+    for name in data['trivia_categories']:
+        print(f"{name['id']} - {name['name']}")
+    try:
+        category = int(input('Please enter the category id you want to play:\n'))
+        while str(category) not in [str(name['id']) for name in data['trivia_categories']]:
+            category = input('Invalid category id.\nPlease enter a valid category id:\n')
+    except:
+        print('Invalid input. Please enter a number.')
+        return get_user_category()
+    return category
