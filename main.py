@@ -5,6 +5,8 @@ for question, correct_answer, answers in zip(questions, correct_answers, incorre
     print(f'{question}?')
     answers.append(correct_answer)
     answers = sorted(answers)
+    if len(answers) == 2:
+        answers = ['True', 'False']
     for i, option in enumerate(answers):
        print(f'{i+1}. {option}')
     answer = input('Your answer: ')
