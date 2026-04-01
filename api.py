@@ -5,9 +5,15 @@ def get_question(category, type):
     correct_answers = []
     incorrect_answers = []
     if type == 'any':
-        url = f'https://opentdb.com/api.php?amount=10&category={category}'
+        if category == '0':
+            url = 'https://opentdb.com/api.php?amount=10'
+        else:
+            url = f'https://opentdb.com/api.php?amount=10&category={category}'
     else:
-        url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
+        if category == '0':
+            url = f'https://opentdb.com/api.php?amount=10&type={type}'
+        else:
+            url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
     response = requests.get(url)
     data = response.json()
     while data['response_code'] != 0:
@@ -36,7 +42,7 @@ def get_user_category():
         print(f"{name['id']} - {name['name']}")
     try:
         category = int(input('Please enter the category id you want to play:\n'))
-        while str(category) not in [str(name['id']) for name in data['trivia_categories']]:
+        while str(category) not in [str(name['id']) for name in data['trivia_categories']] and category != 0:
             category = input('Invalid category id.\nPlease enter a valid category id:\n')
     except:
         print('Invalid input. Please enter a number.')
