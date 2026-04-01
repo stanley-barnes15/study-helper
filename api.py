@@ -1,10 +1,13 @@
 import requests
 import html
-def get_question(category):
+def get_question(category, type):
     questions = []
     correct_answers = []
     incorrect_answers = []
-    url = f'https://opentdb.com/api.php?amount=10&category={category}&type=multiple'
+    if type == 'any':
+        url = f'https://opentdb.com/api.php?amount=10&category={category}'
+    else:
+        url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
     response = requests.get(url)
     data = response.json()
     while data['response_code'] != 0:
