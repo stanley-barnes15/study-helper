@@ -1,11 +1,12 @@
 from api import get_question, get_user_category
+category = get_user_category()
 difficulty = input('Please enter the difficulty level you want to play (easy/medium/hard/any):\n')
 while difficulty not in ['easy', 'medium', 'hard', 'any']:
     difficulty = input('Invalid difficulty level. Please enter again.\n')
 type = input('Please enter the type of questions you want to play (multiple/boolean/any):\n')
 while type not in ['multiple', 'boolean', 'any']:
     type = input('Invalid question type. Please enter again.\n')
-questions, correct_answers, incorrect_answers = get_question(get_user_category(), type, difficulty)
+questions, correct_answers, incorrect_answers = get_question(category, type, difficulty)
 total = 0
 for question, correct_answer, answers in zip(questions, correct_answers, incorrect_answers):
     print(question)
