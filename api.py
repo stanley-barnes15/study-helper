@@ -4,55 +4,27 @@ def get_question(category, type, difficulty):
     questions = []
     correct_answers = []
     incorrect_answers = []
-    if type == 'any':
-        if category == '0':
-            if difficulty == 'any':
-                url = 'https://opentdb.com/api.php?amount=10'
-            else:
-                url = f'https://opentdb.com/api.php?amount=10&difficulty={difficulty}'
-        else:
-            if difficulty == 'any':
-                url = f'https://opentdb.com/api.php?amount=10&category={category}'
-            else:
-                url = f'https://opentdb.com/api.php?amount=10&category={category}&difficulty={difficulty}'
-    else:
-        if category == '0':
-            if difficulty == 'any':
-                url = f'https://opentdb.com/api.php?amount=10&type={type}'
-            else:
-                url = f'https://opentdb.com/api.php?amount=10&type={type}&difficulty={difficulty}'
-        else:
-            if difficulty == 'any':
-                url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
-            else:
-                url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}&difficulty={difficulty}'
-    response = requests.get(url)
+    params = {"amount": 10}
+    url = 'https://opentdb.com/api.php'
+    if category != 0:
+        params["category"] = category
+    if difficulty != "any":
+        params["difficulty"] = difficulty
+    if type != "any":
+        params["type"] = type
+    response = requests.get(url,params=params)
     data = response.json()
     while data['response_code'] != 0:
         print('Error retrieving questions. Please choose again.')
         category = get_user_choices()
-        if type == 'any':
-            if category == '0':
-                if difficulty == 'any':
-                    url = 'https://opentdb.com/api.php?amount=10'
-                else:
-                    url = f'https://opentdb.com/api.php?amount=10&difficulty={difficulty}'
-            else:
-                if difficulty == 'any':
-                    url = f'https://opentdb.com/api.php?amount=10&category={category}'
-                else:
-                    url = f'https://opentdb.com/api.php?amount=10&category={category}&difficulty={difficulty}'
-        else:
-            if category == '0':
-                if difficulty == 'any':
-                    url = f'https://opentdb.com/api.php?amount=10&type={type}'
-                else:
-                    url = f'https://opentdb.com/api.php?amount=10&type={type}&difficulty={difficulty}'
-            else:
-                if difficulty == 'any':
-                    url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}'
-                else:
-                    url = f'https://opentdb.com/api.php?amount=10&category={category}&type={type}&difficulty={difficulty}'
+        if category != 0:
+            params["category"] = category
+        if difficulty != "any":
+            params["difficulty"] = difficulty
+        if type != "any":
+            params["type"] = type
+        response = requests.get(url,params=params)
+        data = response.json()
         response = requests.get(url)
         data = response.json()
     for i in range(10):
