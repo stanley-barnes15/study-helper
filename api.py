@@ -10,3 +10,11 @@ def get_question():
     correct_answer = data['results'][0]['correct_answer']
     correct_answer = html.unescape(correct_answer)
     return question, correct_answer
+
+def get_user_category():
+    url = 'https://opentdb.com/api_category.php'
+    response = requests.get(url)
+    data = response.json()
+    print(data)
+
+get_user_category()
