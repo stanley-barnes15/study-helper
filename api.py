@@ -3,7 +3,8 @@ import html
 def get_question(category):
     questions = []
     correct_answers = []
-    url = f'https://opentdb.com/api.php?amount=10&category={category}'
+    incorrect_answers = []
+    url = f'https://opentdb.com/api.php?amount=10&category={category}&type=multiple'
     response = requests.get(url)
     data = response.json()
     while data['response_code'] != 0:
@@ -13,11 +14,15 @@ def get_question(category):
         response = requests.get(url)
         data = response.json()
     for i in range(10):
+        incorrect = []
         question = html.unescape(data['results'][i]['question'])
         correct_answer = html.unescape(data['results'][i]['correct_answer'])
+        for j in range(len(data['results'][i]['incorrect_answers'])):
+            incorrect.append(html.unescape(data['results'][i]['incorrect_answers'][j]))
         questions.append(question)
         correct_answers.append(correct_answer)
-    return questions, correct_answers
+        incorrect_answers.append(incorrect)
+    return questions, correct_answers, incorrect_answers
 
 def get_user_category():
     url = 'https://opentdb.com/api_category.php'
